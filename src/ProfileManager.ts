@@ -9,7 +9,7 @@ import { Profile, ProfileStore } from "@rbxts/profileservice/globals";
  * @template T The type of data stored in the profile.
  * @template MetaData The type of metadata stored with the profile.
  */
-class ProfileManager<T extends object, MetaData> {
+export class ProfileManager<T extends object, MetaData> {
 
     profileStore: ProfileStore<T, MetaData>;
     name: string;
@@ -149,5 +149,3 @@ class ProfileManager<T extends object, MetaData> {
         return false;
     }
 }
-
-export = ProfileManager;

@@ -1,4 +1,7 @@
 declare global {
+    /**
+     * Define instance information in this interface.
+     */
     interface InstanceInfo {
 
     }
@@ -51,7 +54,7 @@ export function getAllInstanceInfo(instance: Instance) {
  * @param key The key to get.
  * @returns The instance info.
  */
-export function getInstanceInfo<T extends keyof InstanceInfo>(instance: Instance, key: T) {
+export function getInstanceInfo<T extends keyof InstanceInfo>(instance: Instance, key: T): InstanceInfo[T] | undefined {
     const info = INFO_PER_INSTANCE.get(instance);
     if (info === undefined)
         return undefined;

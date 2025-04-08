@@ -1,6 +1,6 @@
 import { Players } from "@rbxts/services";
 
-namespace Streaming {
+export namespace Streaming {
 
     /** The radius in studs within which streaming events will be sent to players */
     export let streamingRadius = 64;
@@ -96,5 +96,3 @@ namespace Streaming {
         });
     };
 }
-
-export = Streaming;
