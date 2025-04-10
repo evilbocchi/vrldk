@@ -1,6 +1,6 @@
 import { Players } from "@rbxts/services";
 import { getHumanoidsInArea } from "./BasePartUtils";
-import { getNearestHumanoid, getNearbyHumanoids } from "./RigUtils";
+import { getNearbyHumanoids, getNearestHumanoid, loadAnimation } from "./RigUtils";
 
 /**
  * Returns the character model for a given player.
@@ -9,7 +9,7 @@ import { getNearestHumanoid, getNearbyHumanoids } from "./RigUtils";
  * @returns The player's character model or undefined if not available.
  */
 export function getCharacter(player?: Player): Model | undefined {
-	return player?.Character;
+    return player?.Character;
 }
 
 /**
@@ -19,7 +19,7 @@ export function getCharacter(player?: Player): Model | undefined {
  * @returns The player's Humanoid instance or undefined if not available.
  */
 export function getHumanoid(player?: Player): Humanoid | undefined {
-	return getCharacter(player)?.FindFirstChildOfClass("Humanoid");
+    return getCharacter(player)?.FindFirstChildOfClass("Humanoid");
 }
 
 /**
@@ -29,7 +29,7 @@ export function getHumanoid(player?: Player): Humanoid | undefined {
  * @returns The player's root part or undefined if not available.
  */
 export function getRootPart(player?: Player): BasePart | undefined {
-	return getHumanoid(player)?.RootPart;
+    return getHumanoid(player)?.RootPart;
 }
 
 /**
@@ -39,7 +39,7 @@ export function getRootPart(player?: Player): BasePart | undefined {
  * @returns The player's Animator instance or undefined if not available.
  */
 export function getAnimator(player?: Player): Animator | undefined {
-	return getHumanoid(player)?.FindFirstChildOfClass("Animator");
+    return getHumanoid(player)?.FindFirstChildOfClass("Animator");
 }
 
 /**
@@ -49,8 +49,8 @@ export function getAnimator(player?: Player): Animator | undefined {
  * @returns The player's health or 0 if the humanoid is not available.
  */
 export function getHealth(player?: Player): number {
-	const humanoid = getHumanoid(player);
-	return humanoid ? humanoid.Health : 0;
+    const humanoid = getHumanoid(player);
+    return humanoid ? humanoid.Health : 0;
 }
 
 /**
@@ -60,7 +60,7 @@ export function getHealth(player?: Player): number {
  * @returns True if the player is dead, false otherwise.
  */
 export function isDead(player?: Player): boolean {
-	return getHealth(player) <= 0;
+    return getHealth(player) <= 0;
 }
 
 /**
@@ -69,14 +69,14 @@ export function isDead(player?: Player): boolean {
  * @returns An array of all player humanoids.
  */
 export function getAllPlayerHumanoids(): Humanoid[] {
-	const humanoids: Humanoid[] = [];
-	for (const player of Players.GetPlayers()) {
-		const humanoid = getHumanoid(player);
-		if (humanoid) {
-			humanoids.push(humanoid);
-		}
-	}
-	return humanoids;
+    const humanoids: Humanoid[] = [];
+    for (const player of Players.GetPlayers()) {
+        const humanoid = getHumanoid(player);
+        if (humanoid) {
+            humanoids.push(humanoid);
+        }
+    }
+    return humanoids;
 }
 
 /**
@@ -86,7 +86,7 @@ export function getAllPlayerHumanoids(): Humanoid[] {
  * @returns The nearest player humanoid or undefined if none found.
  */
 export function getNearestPlayerHumanoid(origin: Vector3): Humanoid | undefined {
-	return getNearestHumanoid(getAllPlayerHumanoids(), origin);
+    return getNearestHumanoid(getAllPlayerHumanoids(), origin);
 }
 
 /**
@@ -97,7 +97,7 @@ export function getNearestPlayerHumanoid(origin: Vector3): Humanoid | undefined 
  * @returns An array of player humanoids within the radius.
  */
 export function getNearbyPlayerHumanoids(origin: Vector3, radius: number): Humanoid[] {
-	return getNearbyHumanoids(getAllPlayerHumanoids(), origin, radius);
+    return getNearbyHumanoids(getAllPlayerHumanoids(), origin, radius);
 }
 
 /**
@@ -107,7 +107,7 @@ export function getNearbyPlayerHumanoids(origin: Vector3, radius: number): Human
  * @returns An array of player humanoids in the area.
  */
 export function getPlayerHumanoidsInArea(area: BasePart) {
-	return getHumanoidsInArea(getAllPlayerHumanoids(), area);
+    return getHumanoidsInArea(getAllPlayerHumanoids(), area);
 }
 
 /**
@@ -116,10 +116,28 @@ export function getPlayerHumanoidsInArea(area: BasePart) {
  * @returns True if all players are dead, false otherwise.
  */
 export function isAllPlayersDead(): boolean {
-	for (const player of Players.GetPlayers()) {
-		if (!isDead(player)) {
-			return false;
+    for (const player of Players.GetPlayers()) {
+        if (!isDead(player)) {
+            return false;
         }
     }
-	return true;
+    return true;
+}
+
+/**
+ * Plays an animation for a specific player.
+ * 
+ * @param player The player to play the animation for.
+ * @param animationId The ID of the animation to play.
+ * @returns True if the animation was played successfully, false otherwise.
+ */
+export function playAnimationForPlayer(player: Player, animationId: string | number) {
+    const humanoid = getHumanoid(player);
+    if (humanoid === undefined)
+        return false;
+    const animTrack = loadAnimation(humanoid, animationId);
+    if (animTrack === undefined)
+        return false;
+    animTrack.Play();
+    return true;
 }
