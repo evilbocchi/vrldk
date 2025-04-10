@@ -1,6 +1,6 @@
 import Signal from "@antivivi/lemon-signal";
-import ProfileService from "@rbxts/profileservice";
-import { Profile, ProfileStore } from "@rbxts/profileservice/globals";
+import ProfileService from "@antivivi/profileservice";
+import { Profile, ProfileStore } from "@antivivi/profileservice/globals";
 
 /**
  * A class that manages profiles using ProfileService.
@@ -16,7 +16,7 @@ export class ProfileManager<T extends object, MetaData> {
     template: T;
     loadedProfiles = new Map<string, Profile<T>>();
     viewedProfiles = new Map<string, Profile<T>>();
-    awaitingOperations = new Map<string, {type: "load" | "view", signal: Signal<Profile<T>>}>();
+    awaitingOperations = new Map<string, { type: "load" | "view", signal: Signal<Profile<T>>; }>();
 
     /**
      * Creates a new profile manager.
@@ -94,7 +94,7 @@ export class ProfileManager<T extends object, MetaData> {
             return res;
         }
         const signal = new Signal<Profile<T>>();
-        const awaitingOperation = {type: "view", signal: signal} as const;
+        const awaitingOperation = { type: "view", signal: signal } as const;
         this.awaitingOperations.set(profileKey, awaitingOperation);
         const profile = this.profileStore.ViewProfileAsync(profileKey);
         if (profile !== undefined) {

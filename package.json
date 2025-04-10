@@ -1,6 +1,6 @@
 {
   "name": "@antivivi/vrldk",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "helper utilities for my projects",
   "main": "out/init.lua",
   "scripts": {
@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "@antivivi/lemon-signal": "^1.2.4",
-    "@rbxts/profileservice": "^1.4.2",
+    "@antivivi/profileservice": "^1.4.3",
     "@rbxts/services": "^1.5.5",
     "@rbxts/stringbuilder": "^1.1.0",
     "rbxts-transformer-instances": "^1.0.1",
