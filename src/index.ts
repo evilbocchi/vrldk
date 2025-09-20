@@ -8,4 +8,6 @@ export * from "./ProfileManager";
 export * from "./RigUtils";
 export * from "./Streaming";
 export * from "./StringUtils";
+export * from "./TimeUtils";
 export * from "./UIUtils";
+
