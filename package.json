@@ -1,6 +1,6 @@
 {
   "name": "@antivivi/vrldk",
-  "version": "1.0.4",
+  "version": "1.1.0",
   "description": "helper utilities for my projects",
   "main": "out/init.lua",
   "scripts": {
